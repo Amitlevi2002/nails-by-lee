@@ -4,7 +4,8 @@ import { makeApi } from '../lib/api';
 import { TOKEN } from './session';
 import { Head } from './Head';
 import { StudioInfo } from './StudioInfo';
-import { HeroCarousel, Lightbox } from './Gallery';
+import { Lightbox } from './Gallery';
+import { Contents, Cover } from './Cover';
 import { LOGO } from '../lib/brand';
 import { IconChevron } from '../components/icons';
 
@@ -54,22 +55,22 @@ export function Welcome({ info, onDone }: { info: Info; onDone: (token: string, 
     );
   return (
     <div className="app">
-      <form className="screen" onSubmit={submit}>
-        {info.gallery.length > 0 && <HeroCarousel photos={info.gallery} onOpen={setLb} />}
-        <div className={`welcome ${info.gallery.length ? 'over' : ''}`}>
-          <img src={LOGO} alt="Nails by Lee" />
-          <div className="brand">Nails by Lee</div>
-          <p>
-            {'קביעת תור \u00B7 '}
-            {info.address}
-          </p>
-          {info.gallery.length > 0 && (
-            <button type="button" className="link" onClick={() => setShowInfo(true)}>
-              {'כל העבודות והמחירון '}
-              <IconChevron />
-            </button>
-          )}
-        </div>
+      <form className="screen cover-screen" onSubmit={submit}>
+        {info.gallery.length > 0 ? (
+          <Cover info={info} onOpen={setLb} />
+        ) : (
+          <div className="welcome">
+            <img src={LOGO} alt="Nails by Lee" />
+            <div className="brand">Nails by Lee</div>
+          </div>
+        )}
+        <p className="dek">{info.about}</p>
+        <Contents info={info} />
+        <button type="button" className="link more" onClick={() => setShowInfo(true)}>
+          {'כל העבודות והפרטים '}
+          <IconChevron />
+        </button>
+        <h2 className="kicker-h">קביעת תור</h2>
         {err && (
           <div className="error" role="alert">
             {err}
