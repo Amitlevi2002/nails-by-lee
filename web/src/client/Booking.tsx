@@ -1,10 +1,11 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Api, ClientDay, Extras, Info, RequestView } from '../lib/types';
 import { useState, useEffect } from 'react';
 import { extrasLabel, fmtPrice, priceOf, serviceName } from '../lib/catalog';
 import { STATUS_LABEL, dateParts, dayLabel, icsFor, minutesUntil, waLink } from '../lib/format';
 import { Head } from './Head';
 import { IconCheck, IconChevron, IconLogout } from '../components/icons';
 import { ServicePicker } from '../components/ServicePicker';
+import { NailPreview, SHADES, ShadePicker, type ShadeId } from '../components/NailPreview';
 import { StudioInfo } from './StudioInfo';
 
 /* ---------- booking flow ---------- */
@@ -17,6 +18,7 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
   const [service, setService] = useState('');
   const [extras, setExtras] = useState<Extras>({});
   const [note, setNote] = useState('');
+  const [shade, setShade] = useState<ShadeId>('nude');
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [booked, setBooked] = useState(false); // auto-approved
@@ -61,7 +63,8 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
           time,
           service,
           extras,
-          note,
+          // the shade she pointed at reaches Lee with the request
+          note: [`גוון: ${SHADES.find((s) => s.id === shade)!.name}`, note.trim()].filter(Boolean).join(' · '),
         },
       });
       setBooked(r.status === 'approved');
@@ -247,6 +250,12 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
           <Head onBack={() => go('times')} title="3 מתוך 4" />
           <h1 className="title">מה עושות?</h1>
           <p className="subtitle">בחרי טיפול ותוספות</p>
+          {service && (
+            <>
+              <NailPreview service={service} extras={extras} shade={shade} />
+              <ShadePicker value={shade} onChange={setShade} />
+            </>
+          )}
           <ServicePicker service={service} setService={setService} extras={extras} setExtras={setExtras} />
           <div className="bottom">
             <button className="btn" disabled={!service} onClick={() => go('confirm')}>

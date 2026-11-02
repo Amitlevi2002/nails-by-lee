@@ -41,9 +41,18 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
   const view = (r: Request) => {
     const c = customer(r.customer_id)!;
     return {
-      id: r.id, time: r.time, note: r.note, status: r.status, service: r.service, extras: r.extras, price: r.price,
+      id: r.id,
+      time: r.time,
+      note: r.note,
+      status: r.status,
+      service: r.service,
+      extras: r.extras,
+      price: r.price,
       attended: r.attended == null ? null : !!r.attended,
-      customerId: c.id, fullName: c.full_name, phone: c.phone, date: day(r.day_id)!.date,
+      customerId: c.id,
+      fullName: c.full_name,
+      phone: c.phone,
+      date: day(r.day_id)!.date,
     };
   };
   const sorted = (rs: Request[]) => rs.map(view).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
@@ -55,7 +64,8 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
   };
   const findOrCreateCustomer = (fullName: string, phone: string): Customer => {
     let c = state.customers.find((x) => x.phone === phone);
-    if (!c) state.customers.push((c = { id: nextId(), full_name: fullName, phone, note: '', blocked: 0, created_at: today }));
+    if (!c)
+      state.customers.push((c = { id: nextId(), full_name: fullName, phone, note: '', blocked: 0, created_at: today }));
     return c;
   };
   let m: RegExpMatchArray | null;
@@ -72,7 +82,10 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
   }
 
   if (path === '/api/client/login' && method === 'POST') {
-    const fullName = String(body.fullName ?? '').trim().replace(/\s+/g, ' ').slice(0, 60);
+    const fullName = String(body.fullName ?? '')
+      .trim()
+      .replace(/\s+/g, ' ')
+      .slice(0, 60);
     const phone = cleanPhone(body.phone);
     if (fullName.split(' ').length < 2) return fail('נא להזין שם פרטי ושם משפחה');
     if (!isPhone(phone)) return fail('מספר טלפון לא תקין (לדוגמה 0501234567)');
@@ -93,7 +106,11 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
           .sort((a, b) => a.date.localeCompare(b.date))
           .map((d) => {
             const taken = takenTimes(d.id);
-            return { id: d.id, date: d.date, slots: [...d.slots].sort().filter((t) => !taken.has(t) && minutesUntil(d.date, t, ctx.now) > 0) };
+            return {
+              id: d.id,
+              date: d.date,
+              slots: [...d.slots].sort().filter((t) => !taken.has(t) && minutesUntil(d.date, t, ctx.now) > 0),
+            };
           })
           .filter((d) => d.slots.length),
       );
@@ -105,17 +122,35 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
 
     if (path === '/api/client/requests' && method === 'POST') {
       const d = day(Number(body.dayId));
-      if (!d || !d.open || !d.slots.includes(body.time) || takenTimes(d.id).has(body.time) || minutesUntil(d.date, body.time, ctx.now) <= 0) {
+      if (
+        !d ||
+        !d.open ||
+        !d.slots.includes(body.time) ||
+        takenTimes(d.id).has(body.time) ||
+        minutesUntil(d.date, body.time, ctx.now) <= 0
+      ) {
         return fail('השעה הזו כבר לא פנויה, נא לבחור שעה אחרת');
       }
       if (customer(me)!.blocked) return fail('לא ניתן לשלוח בקשה כרגע. אפשר לפנות ללי ישירות', 403);
-      if (state.requests.some((r) => r.day_id === d.id && r.customer_id === me && ACTIVE.includes(r.status))) return fail('כבר שלחת בקשה ליום הזה');
+      if (state.requests.some((r) => r.day_id === d.id && r.customer_id === me && ACTIVE.includes(r.status)))
+        return fail('כבר שלחת בקשה ליום הזה');
       const extras: Extras = body.extras ?? {};
       const price = priceOf(state, body.service, extras);
       if (price == null) return fail('נא לבחור טיפול');
       const status = state.settings.autoApprove ? 'approved' : 'pending';
       const id = nextId();
-      state.requests.push({ id, day_id: d.id, customer_id: me, time: body.time, service: body.service, extras, price, note: String(body.note ?? '').slice(0, 300), status, attended: null });
+      state.requests.push({
+        id,
+        day_id: d.id,
+        customer_id: me,
+        time: body.time,
+        service: body.service,
+        extras,
+        price,
+        note: String(body.note ?? '').slice(0, 300),
+        status,
+        attended: null,
+      });
       return ok({ id, status }, 201);
     }
 
@@ -133,7 +168,13 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
     if (path === '/api/client/waitlist' && method === 'POST') {
       if (!state.settings.catalog.services.some((s) => s.id === body.service)) return fail('נא לבחור טיפול');
       state.waitlist = state.waitlist.filter((w) => w.customer_id !== me);
-      state.waitlist.push({ id: nextId(), customer_id: me, service: body.service, note: String(body.note ?? '').slice(0, 300), created_at: today });
+      state.waitlist.push({
+        id: nextId(),
+        customer_id: me,
+        service: body.service,
+        note: String(body.note ?? '').slice(0, 300),
+        created_at: today,
+      });
       return ok(undefined, 201);
     }
   }
@@ -159,20 +200,40 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
         .filter((c) => !c.blocked)
         .flatMap((c) => {
           const mine = all.filter((r) => r.customerId === c.id);
-          const past = mine.filter((r) => r.status === 'approved' && r.date < today).map((r) => r.date).sort();
+          const past = mine
+            .filter((r) => r.status === 'approved' && r.date < today)
+            .map((r) => r.date)
+            .sort();
           const booked = mine.some((r) => ACTIVE.includes(r.status) && r.date >= today);
           const last = past.at(-1);
-          return last && !booked && last <= cutoff ? [{ id: c.id, fullName: c.full_name, phone: c.phone, lastVisit: last }] : [];
+          return last && !booked && last <= cutoff
+            ? [{ id: c.id, fullName: c.full_name, phone: c.phone, lastVisit: last }]
+            : [];
         });
       return ok({
         pending: all.filter((r) => r.status === 'pending' && r.date >= today),
         upcoming: all.filter((r) => r.status === 'approved' && (r.date > today || (r.date === today && r.time >= now))),
         reschedule: all.filter((r) => r.status === 'rejected' && r.date >= today),
-        toMark: all.filter((r) => r.status === 'approved' && r.attended === null && (r.date < today || (r.date === today && r.time < now))),
+        toMark: all.filter(
+          (r) =>
+            r.status === 'approved' && r.attended === null && (r.date < today || (r.date === today && r.time < now)),
+        ),
         due,
         waitlist: state.waitlist.flatMap((w) => {
           const c = customer(w.customer_id);
-          return c ? [{ id: w.id, service: w.service, note: w.note, createdAt: w.created_at, customerId: c.id, fullName: c.full_name, phone: c.phone }] : [];
+          return c
+            ? [
+                {
+                  id: w.id,
+                  service: w.service,
+                  note: w.note,
+                  createdAt: w.created_at,
+                  customerId: c.id,
+                  fullName: c.full_name,
+                  phone: c.phone,
+                },
+              ]
+            : [];
         }),
         month: {
           count: monthRows.length,
@@ -191,7 +252,10 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
           .map((d) => {
             const rs = state.requests.filter((r) => r.day_id === d.id);
             return {
-              id: d.id, date: d.date, isOpen: !!d.open, slots: [...d.slots].sort(),
+              id: d.id,
+              date: d.date,
+              isOpen: !!d.open,
+              slots: [...d.slots].sort(),
               pending: rs.filter((r) => r.status === 'pending').length,
               approved: rs.filter((r) => r.status === 'approved').length,
             };
@@ -252,7 +316,11 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
       if (!isDate(body.date) || body.date < today) return fail('תאריך לא תקין');
       if (!isTime(body.time)) return fail('שעה לא תקינה');
       const d = dayFor(body.date, body.time);
-      if (state.requests.some((x) => x.id !== r.id && x.day_id === d.id && x.time === body.time && x.status === 'approved')) {
+      if (
+        state.requests.some(
+          (x) => x.id !== r.id && x.day_id === d.id && x.time === body.time && x.status === 'approved',
+        )
+      ) {
         return fail('בשעה הזו כבר יש תור מאושר');
       }
       Object.assign(r, { day_id: d.id, time: body.time, status: 'approved' });
@@ -268,7 +336,12 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
       if (method === 'PATCH') {
         if (!r || r.status === 'cancelled') return fail('הבקשה בוטלה על ידי הלקוחה', 409);
         if (body.status !== 'approved' && body.status !== 'rejected') return fail('סטטוס לא תקין');
-        if (body.status === 'approved' && state.requests.some((x) => x.id !== r.id && x.day_id === r.day_id && x.time === r.time && x.status === 'approved')) {
+        if (
+          body.status === 'approved' &&
+          state.requests.some(
+            (x) => x.id !== r.id && x.day_id === r.day_id && x.time === r.time && x.status === 'approved',
+          )
+        ) {
           return fail('כבר אישרת לקוחה אחרת בשעה הזו', 409);
         }
         r.status = body.status;
@@ -277,7 +350,10 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
     }
 
     if (path === '/api/admin/bookings' && method === 'POST') {
-      const fullName = String(body.fullName ?? '').trim().replace(/\s+/g, ' ').slice(0, 60);
+      const fullName = String(body.fullName ?? '')
+        .trim()
+        .replace(/\s+/g, ' ')
+        .slice(0, 60);
       const phone = cleanPhone(body.phone);
       if (!fullName) return fail('נא להזין שם');
       if (!isPhone(phone)) return fail('מספר טלפון לא תקין');
@@ -288,7 +364,18 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
       if (price == null) return fail('נא לבחור טיפול');
       const c = findOrCreateCustomer(fullName, phone);
       const d = dayFor(body.date, body.time);
-      state.requests.push({ id: nextId(), day_id: d.id, customer_id: c.id, time: body.time, service: body.service, extras, price, note: String(body.note ?? '').slice(0, 300), status: 'approved', attended: null });
+      state.requests.push({
+        id: nextId(),
+        day_id: d.id,
+        customer_id: c.id,
+        time: body.time,
+        service: body.service,
+        extras,
+        price,
+        note: String(body.note ?? '').slice(0, 300),
+        status: 'approved',
+        attended: null,
+      });
       state.waitlist = state.waitlist.filter((w) => w.customer_id !== c.id);
       return ok({ dayId: d.id }, 201);
     }
@@ -303,10 +390,20 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
         state.customers
           .map((c) => {
             const rs = state.requests.filter((r) => r.customer_id === c.id);
-            const visits = rs.filter((r) => r.status === 'approved').map((r) => day(r.day_id)!.date).filter((d) => d < today).sort();
+            const visits = rs
+              .filter((r) => r.status === 'approved')
+              .map((r) => day(r.day_id)!.date)
+              .filter((d) => d < today)
+              .sort();
             return {
-              id: c.id, fullName: c.full_name, phone: c.phone, blocked: !!c.blocked, createdAt: c.created_at,
-              total: rs.length, approved: rs.filter((r) => r.status === 'approved').length, lastVisit: visits.at(-1) ?? null,
+              id: c.id,
+              fullName: c.full_name,
+              phone: c.phone,
+              blocked: !!c.blocked,
+              createdAt: c.created_at,
+              total: rs.length,
+              approved: rs.filter((r) => r.status === 'approved').length,
+              lastVisit: visits.at(-1) ?? null,
             };
           })
           .sort((a, b) => a.fullName.localeCompare(b.fullName, 'he')),
@@ -325,7 +422,13 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
         const history = sorted(state.requests.filter((r) => r.customer_id === c.id)).reverse();
         const past = history.filter((h) => h.status === 'approved' && h.date < today && h.attended !== false);
         return ok({
-          id: c.id, fullName: c.full_name, phone: c.phone, note: c.note, blocked: !!c.blocked, createdAt: c.created_at, history,
+          id: c.id,
+          fullName: c.full_name,
+          phone: c.phone,
+          note: c.note,
+          blocked: !!c.blocked,
+          createdAt: c.created_at,
+          history,
           stats: {
             visits: past.length,
             spent: past.reduce((a, h) => a + h.price, 0),
@@ -340,7 +443,8 @@ export function handle(state: State, req: ApiRequest, ctx: Context): ApiResponse
       const s = state.settings;
       if (method === 'PATCH') {
         if (typeof body.phone === 'string') s.phone = cleanPhone(body.phone);
-        for (const k of ['address', 'instagram', 'about'] as const) if (typeof body[k] === 'string') s[k] = body[k].slice(0, 200);
+        for (const k of ['address', 'instagram', 'about'] as const)
+          if (typeof body[k] === 'string') s[k] = body[k].slice(0, 200);
         if (Number.isFinite(body.cancelHours)) s.cancelHours = Math.min(72, Math.max(0, Math.round(body.cancelHours)));
         if (typeof body.autoApprove === 'boolean') s.autoApprove = body.autoApprove;
         if (body.catalog) {

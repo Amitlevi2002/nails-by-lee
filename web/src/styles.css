@@ -326,6 +326,20 @@ button:disabled { cursor: default; }
 .lb-slide { flex: 0 0 100%; scroll-snap-align: center; display: grid; place-items: center; padding: 0 12px calc(24px + env(safe-area-inset-bottom, 0px)); }
 .lb-slide img { max-width: 100%; max-height: 100%; border-radius: 14px; object-fit: contain; }
 
+/* live sketch of the chosen treatment */
+.nail-preview { margin: 0 0 18px; background: linear-gradient(180deg, var(--card), #FBF8F4); border-radius: 22px; padding: 14px 10px 12px; text-align: center; }
+.nail-preview svg { width: 100%; max-width: 340px; height: auto; display: block; margin: 0 auto; -webkit-mask-image: linear-gradient(#000 72%, transparent); mask-image: linear-gradient(#000 72%, transparent); }
+.nail-preview .finger { fill: #E9C3AC; stroke: #D9AE95; stroke-width: 1; }
+.nail-preview .polish { transition: d .35s ease, fill .3s ease; }
+.nail-preview .nail { transition: transform .35s ease; }
+.nail-preview .tip { fill: #FBFAF7; transition: d .35s ease; }
+.nail-preview .repair { fill: none; stroke: var(--sand-deep); stroke-width: 1.4; stroke-dasharray: 3 3; }
+.nail-preview .art, .nail-preview .charm { animation: pop .3s cubic-bezier(.2,1.4,.4,1) both; }
+.nail-preview figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; min-height: 18px; }
+.shades { display: flex; justify-content: center; gap: 10px; margin: -6px 0 22px; }
+.shade { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--card); box-shadow: 0 0 0 1.5px var(--line); padding: 0; transition: transform .15s, box-shadow .15s; }
+.shade.on { box-shadow: 0 0 0 2px var(--ink); transform: scale(1.08); }
+
 html { direction: rtl; }
 .app { min-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 52px); }
 .demo-bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: var(--ink); color: #fff;

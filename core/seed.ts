@@ -19,10 +19,25 @@ export const DEFAULT_CATALOG: Catalog = {
 };
 
 const settings = (over: Partial<Settings> = {}): Settings => ({
-  phone: '', address: '', instagram: '', about: '', cancelHours: 3, autoApprove: false, catalog: structuredClone(DEFAULT_CATALOG), ...over,
+  phone: '',
+  address: '',
+  instagram: '',
+  about: '',
+  cancelHours: 3,
+  autoApprove: false,
+  catalog: structuredClone(DEFAULT_CATALOG),
+  ...over,
 });
 
-export const emptyState = (): State => ({ settings: settings(), customers: [], days: [], requests: [], waitlist: [], gallery: [], nextId: 1 });
+export const emptyState = (): State => ({
+  settings: settings(),
+  customers: [],
+  days: [],
+  requests: [],
+  waitlist: [],
+  gallery: [],
+  nextId: 1,
+});
 
 /** A believable month around `now`: open days ahead, a few requests waiting, history to look at. */
 export function demoState(now: Date, photos: string[], studio: Partial<Settings> = {}): State {
@@ -37,7 +52,14 @@ export function demoState(now: Date, photos: string[], studio: Partial<Settings>
       ['יעל מזרחי', '0586665544', ''],
       ['רוני דהן', '0529990011', ''],
       ['הילה מזרחי', '0532223344', ''],
-    ].map(([full_name, phone, note], i) => ({ id: i + 1, full_name, phone, note, blocked: 0 as const, created_at: at(-60 + i * 7) })),
+    ].map(([full_name, phone, note], i) => ({
+      id: i + 1,
+      full_name,
+      phone,
+      note,
+      blocked: 0 as const,
+      created_at: at(-60 + i * 7),
+    })),
     days: [
       { id: 10, date: at(-26), open: 0, slots: ['11:00', '14:00'] },
       { id: 11, date: at(-2), open: 0, slots: ['10:00', '13:00', '16:00'] },
@@ -50,8 +72,29 @@ export function demoState(now: Date, photos: string[], studio: Partial<Settings>
     gallery: photos.map((url, i) => ({ id: i + 1, url })),
     nextId: 100,
   };
-  const book = (id: number, day_id: number, customer_id: number, time: string, service: string, extras: Record<string, number>, status: any, note = '', attended: 0 | 1 | null = null) =>
-    state.requests.push({ id, day_id, customer_id, time, service, extras, price: priceOf(state, service, extras)!, note, status, attended });
+  const book = (
+    id: number,
+    day_id: number,
+    customer_id: number,
+    time: string,
+    service: string,
+    extras: Record<string, number>,
+    status: any,
+    note = '',
+    attended: 0 | 1 | null = null,
+  ) =>
+    state.requests.push({
+      id,
+      day_id,
+      customer_id,
+      time,
+      service,
+      extras,
+      price: priceOf(state, service, extras)!,
+      note,
+      status,
+      attended,
+    });
   book(20, 10, 6, '11:00', 'fill', {}, 'approved', '', 1);
   book(21, 11, 2, '10:00', 'anatomic', { art: 2 }, 'approved');
   book(22, 11, 3, '13:00', 'build', {}, 'approved');

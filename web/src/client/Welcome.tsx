@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Info } from '../lib/types';
 import { useState, useMemo } from 'react';
 import { makeApi } from '../lib/api';
 import { TOKEN } from './session';
@@ -65,9 +65,7 @@ export function Welcome({ info, onDone }: { info: Info; onDone: (token: string, 
           </p>
           {info.gallery.length > 0 && (
             <button type="button" className="link" onClick={() => setShowInfo(true)}>
-              {
-                'כל העבודות והמחירון '
-              }
+              {'כל העבודות והמחירון '}
               <IconChevron />
             </button>
           )}

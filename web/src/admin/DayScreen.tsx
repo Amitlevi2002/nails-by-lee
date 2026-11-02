@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { AdminDay, Api, Info, Nav, RequestView } from '../lib/types';
 import { useState, useEffect } from 'react';
 import { dateParts, todayIL } from '../lib/format';
 import { Head } from './shared';

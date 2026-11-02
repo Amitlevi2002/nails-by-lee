@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Api, CustomerProfile, CustomerRow, Info, Nav } from '../lib/types';
 import { useState, useEffect } from 'react';
 import { Call, Head, WA, firstName, initials } from './shared';
 import { dateParts, fmtPhone } from '../lib/format';

@@ -1,10 +1,16 @@
 export class ApiError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number,
+  ) {
     super(message);
   }
 }
 
-export type Transport = (path: string, init: { method: string; body?: unknown; token: string | null }) => Promise<{ status: number; data: any }>;
+export type Transport = (
+  path: string,
+  init: { method: string; body?: unknown; token: string | null },
+) => Promise<{ status: number; data: any }>;
 
 // Unset: the hosted demo, where the booking rules from /core run right here in the browser.
 // Empty string: same origin, when the server also serves this build. A URL: a separate API host.

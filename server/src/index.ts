@@ -29,11 +29,15 @@ app.use('/api', (req, res) => {
   // The handler mutates the state it's given, so writes run on a copy that is committed only on success.
   const write = isWrite(req.method);
   const state = write ? structuredClone(store.get()) : store.get();
-  const result = handle(state, { method: req.method, path, body: req.body, session: auth.verify(req.get('authorization')) }, {
-    now: new Date(),
-    checkAdminPassword: auth.checkAdminPassword,
-    issueToken: auth.issueToken,
-  });
+  const result = handle(
+    state,
+    { method: req.method, path, body: req.body, session: auth.verify(req.get('authorization')) },
+    {
+      now: new Date(),
+      checkAdminPassword: auth.checkAdminPassword,
+      issueToken: auth.issueToken,
+    },
+  );
   if (write && result.status < 400) store.commit(state);
   res.status(result.status).json(result.body ?? {});
 });

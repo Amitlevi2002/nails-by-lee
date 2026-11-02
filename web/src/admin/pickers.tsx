@@ -1,9 +1,17 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { AdminDay, Api } from '../lib/types';
 import { useState, useEffect } from 'react';
 import { GRID } from './shared';
 import { dateParts, nowTimeIL, todayIL } from '../lib/format';
 
-export function SlotPicker({ value, onChange, locked = new Set<string>() }: { value: string[]; onChange: (v: string[]) => void; locked?: Set<string> }) {
+export function SlotPicker({
+  value,
+  onChange,
+  locked = new Set<string>(),
+}: {
+  value: string[];
+  onChange: (v: string[]) => void;
+  locked?: Set<string>;
+}) {
   const [custom, setCustom] = useState('');
   const all = [...new Set([...GRID, ...value])].sort();
   const toggle = (t) => {
@@ -61,7 +69,21 @@ export const SlotChips = ({ slots }: { slots: string[] }) => (
 /* ---------- one day ---------- */
 
 /* ---------- time chooser used by reschedule + manual booking ---------- */
-export function TimeChooser({ api, days, date, setDate, time, setTime }: { api: Api; days: AdminDay[]; date: string; setDate: (d: string) => void; time: string; setTime: (t: string) => void }) {
+export function TimeChooser({
+  api,
+  days,
+  date,
+  setDate,
+  time,
+  setTime,
+}: {
+  api: Api;
+  days: AdminDay[];
+  date: string;
+  setDate: (d: string) => void;
+  time: string;
+  setTime: (t: string) => void;
+}) {
   const [taken, setTaken] = useState(new Set());
   const [custom, setCustom] = useState('');
   const day = days.find((d) => d.date === date);

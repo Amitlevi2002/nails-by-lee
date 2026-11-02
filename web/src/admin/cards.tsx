@@ -1,11 +1,25 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Api, RequestView } from '../lib/types';
 import { useState } from 'react';
 import { extrasLabel, fmtPrice, isFromPrice, serviceName } from '../lib/catalog';
 import { Call, MSG, WA } from './shared';
 import { dayLabel } from '../lib/format';
 
 /* ---------- request + booking cards ---------- */
-export function ReqCard({ api, r, showDate = false, clash = false, onDone, onReschedule }: { api: Api; r: RequestView; showDate?: boolean; clash?: boolean; onDone: () => void; onReschedule: (r: RequestView) => void }) {
+export function ReqCard({
+  api,
+  r,
+  showDate = false,
+  clash = false,
+  onDone,
+  onReschedule,
+}: {
+  api: Api;
+  r: RequestView;
+  showDate?: boolean;
+  clash?: boolean;
+  onDone: () => void;
+  onReschedule: (r: RequestView) => void;
+}) {
   const [err, setErr] = useState('');
   async function decide(status: 'approved' | 'rejected') {
     setErr('');
@@ -63,7 +77,19 @@ export function ReqCard({ api, r, showDate = false, clash = false, onDone, onRes
   );
 }
 
-export function BookingRow({ api, r, address, showDate = false, onChanged }: { api: Api; r: RequestView; address?: string; showDate?: boolean; onChanged: () => void }) {
+export function BookingRow({
+  api,
+  r,
+  address,
+  showDate = false,
+  onChanged,
+}: {
+  api: Api;
+  r: RequestView;
+  address?: string;
+  showDate?: boolean;
+  onChanged: () => void;
+}) {
   const [ask, setAsk] = useState(false);
   async function cancel() {
     await api(`/api/admin/requests/${r.id}`, {

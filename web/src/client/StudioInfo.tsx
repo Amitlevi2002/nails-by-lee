@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Info } from '../lib/types';
 import { useState } from 'react';
 import { fmtPrice, getCatalog } from '../lib/catalog';
 import { Lightbox, Masonry } from './Gallery';

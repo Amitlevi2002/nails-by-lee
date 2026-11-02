@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Photo } from '../lib/types';
 import { useState, useEffect, useRef } from 'react';
 
 /** Full-screen viewer: swipe between photos, counter, close. */

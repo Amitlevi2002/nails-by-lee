@@ -1,10 +1,20 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Api, Info, Nav, Settings } from '../lib/types';
 import { useState, useEffect, useRef } from 'react';
 import { setCatalog } from '../lib/catalog';
 import { Head, shrink } from './shared';
 import { IconPlus, IconTrash } from '../components/icons';
 
-export function SettingsScreen({ api, info, onInfo, nav }: { api: Api; info: Info; onInfo: (i: Info) => void; nav: Nav }) {
+export function SettingsScreen({
+  api,
+  info,
+  onInfo,
+  nav,
+}: {
+  api: Api;
+  info: Info;
+  onInfo: (i: Info) => void;
+  nav: Nav;
+}) {
   const [s, setS] = useState<Settings | null>(null);
   const [gallery, setGallery] = useState(info.gallery);
   const [err, setErr] = useState('');

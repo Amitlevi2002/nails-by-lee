@@ -1,9 +1,21 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Extras } from '../lib/types';
 import { MAX_NAILS, fmtPrice, getCatalog } from '../lib/catalog';
 
 /* ---------- service + extras picker (booking and waitlist) ---------- */
-export function ServicePicker({ service, setService, extras, setExtras, withExtras = true }: { service: string; setService: (s: string) => void; extras?: Extras; setExtras?: Dispatch<SetStateAction<Extras>>; withExtras?: boolean }) {
+export function ServicePicker({
+  service,
+  setService,
+  extras,
+  setExtras,
+  withExtras = true,
+}: {
+  service: string;
+  setService: (s: string) => void;
+  extras?: Extras;
+  setExtras?: Dispatch<SetStateAction<Extras>>;
+  withExtras?: boolean;
+}) {
   const cat = getCatalog();
   return (
     <>

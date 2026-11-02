@@ -32,11 +32,15 @@ const parse = (token: string | null): Session | null => {
 export const demoTransport: Transport = async (path, { method, body, token }) => {
   await new Promise((r) => setTimeout(r, 120)); // so loading states show up as they would on a network
   const s = load();
-  const res = handle(s, { method, path, body: structuredClone(body ?? {}), session: parse(token) }, {
-    now: new Date(),
-    checkAdminPassword: () => true, // the demo opens straight into the admin side
-    issueToken: (session) => (session.role === 'admin' ? 'admin' : `client:${session.id}`),
-  });
+  const res = handle(
+    s,
+    { method, path, body: structuredClone(body ?? {}), session: parse(token) },
+    {
+      now: new Date(),
+      checkAdminPassword: () => true, // the demo opens straight into the admin side
+      issueToken: (session) => (session.role === 'admin' ? 'admin' : `client:${session.id}`),
+    },
+  );
   if (isWrite(method) && res.status < 400) {
     try {
       localStorage.setItem(KEY, JSON.stringify(s));

@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { AdminDay, Api, Extras, Nav, Screen } from '../lib/types';
 import { useState } from 'react';
 import { todayIL } from '../lib/format';
 import { fmtPrice, priceOf } from '../lib/catalog';
@@ -7,7 +7,17 @@ import { TimeChooser } from './pickers';
 import { ServicePicker } from '../components/ServicePicker';
 
 /* ---------- manual booking ---------- */
-export function ManualBook({ api, days, prefill = {}, nav }: { api: Api; days: AdminDay[]; prefill?: Extract<Screen, { name: 'book' }>['prefill']; nav: Nav }) {
+export function ManualBook({
+  api,
+  days,
+  prefill = {},
+  nav,
+}: {
+  api: Api;
+  days: AdminDay[];
+  prefill?: Extract<Screen, { name: 'book' }>['prefill'];
+  nav: Nav;
+}) {
   const upcoming = days.filter((d) => d.date >= todayIL());
   const [fullName, setFullName] = useState(prefill?.fullName ?? '');
   const [phone, setPhone] = useState(prefill?.phone ?? '');

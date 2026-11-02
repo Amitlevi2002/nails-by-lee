@@ -1,4 +1,3 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
 import { useState, useMemo } from 'react';
 import { makeApi } from '../lib/api';
 import { TOKEN } from './shared';

@@ -12,5 +12,9 @@ publicApi('/api/info')
     root.render(<App info={info} />);
   })
   .catch(() => {
-    root.render(<p className="empty"><b>אין חיבור כרגע</b>נסי לרענן בעוד רגע</p>);
+    root.render(
+      <p className="empty">
+        <b>אין חיבור כרגע</b>נסי לרענן בעוד רגע
+      </p>,
+    );
   });

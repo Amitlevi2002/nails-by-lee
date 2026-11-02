@@ -16,7 +16,9 @@ export function createAuth(secret: string, adminPassword: string) {
 
   return {
     issueToken(session: Session) {
-      const payload = Buffer.from(JSON.stringify({ ...session, exp: Date.now() + TTL[session.role] })).toString('base64url');
+      const payload = Buffer.from(JSON.stringify({ ...session, exp: Date.now() + TTL[session.role] })).toString(
+        'base64url',
+      );
       return `${payload}.${sign(payload)}`;
     },
 

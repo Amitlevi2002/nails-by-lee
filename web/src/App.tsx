@@ -33,14 +33,26 @@ function Demo({ initial }: { initial: any }) {
       <div className="demo-bar">
         <div className="demo-in">
           <div className="demo-seg" role="tablist">
-            <button className={view === 'admin' ? 'on' : ''} onClick={() => switchTo('admin')} role="tab" aria-selected={view === 'admin'}>
+            <button
+              className={view === 'admin' ? 'on' : ''}
+              onClick={() => switchTo('admin')}
+              role="tab"
+              aria-selected={view === 'admin'}
+            >
               צד הניהול
             </button>
-            <button className={view === 'client' ? 'on' : ''} onClick={() => switchTo('client')} role="tab" aria-selected={view === 'client'}>
+            <button
+              className={view === 'client' ? 'on' : ''}
+              onClick={() => switchTo('client')}
+              role="tab"
+              aria-selected={view === 'client'}
+            >
               צד הלקוחות
             </button>
           </div>
-          <button className="demo-reset" onClick={() => import('./lib/demo').then((m) => m.resetDemo())}>איפוס</button>
+          <button className="demo-reset" onClick={() => import('./lib/demo').then((m) => m.resetDemo())}>
+            איפוס
+          </button>
         </div>
       </div>
       {view === 'admin' ? <AdminApp key={'a' + n} info={info} /> : <ClientApp key={'c' + n} info={info} />}
@@ -57,7 +69,9 @@ function Demo({ initial }: { initial: any }) {
               <li>בהגדרות (גלגל השיניים) אפשר לשנות מחירים ולהעלות תמונות</li>
               <li>הכל נשמר בדפדפן. ״איפוס״ מחזיר להתחלה</li>
             </ol>
-            <button className="btn" onClick={closeIntro}>יאללה</button>
+            <button className="btn" onClick={closeIntro}>
+              יאללה
+            </button>
           </div>
         </div>
       )}

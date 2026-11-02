@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { AdminDay, Api, Info, ListName, Nav, Overview, Screen, Settings } from '../lib/types';
 import { useState, useEffect } from 'react';
 import { DayScreen, OpenDay } from './DayScreen';
 import { Reschedule } from './Reschedule';

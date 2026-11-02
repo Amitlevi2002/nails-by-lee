@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { ReactNode } from '../lib/types';
 import { IconBack } from '../components/icons';
 
 export function Head({ onBack, title, end }: { onBack?: () => void; title?: string; end?: ReactNode }) {

@@ -15,6 +15,7 @@ export function addDays(date: string, n: number) {
 
 /** Minutes from `now` until date+time, both read as Israel wall-clock time. Negative when it has passed. */
 export function minutesUntil(date: string, time: string, now: Date) {
-  const wall = (d: string, t: string) => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10), +t.slice(0, 2), +t.slice(3, 5));
+  const wall = (d: string, t: string) =>
+    Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10), +t.slice(0, 2), +t.slice(3, 5));
   return (wall(date, time) - wall(todayIn(now), timeIn(now))) / 60000;
 }

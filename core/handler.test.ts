@@ -71,12 +71,24 @@ test('a client cannot book a time that is not offered, has passed, or twice on t
   assert.equal(call(s, 'POST', '/api/client/requests', { dayId, time: '12:00', service: 'fill' }, client).status, 400);
   const later = new Date('2026-11-02T09:30:00Z'); // 11:30 in Israel: 10:00 is gone
   const other = studio();
-  assert.equal(call(other.s, 'POST', '/api/client/requests', { dayId: other.dayId, time: '10:00', service: 'fill' }, other.client, later).status, 400);
+  assert.equal(
+    call(
+      other.s,
+      'POST',
+      '/api/client/requests',
+      { dayId: other.dayId, time: '10:00', service: 'fill' },
+      other.client,
+      later,
+    ).status,
+    400,
+  );
 });
 
 test('approving takes the slot away from other clients and blocks a second approval at that time', () => {
   const { s, client, dayId } = studio();
-  const second: Session = JSON.parse(call(s, 'POST', '/api/client/login', { fullName: 'Noa Avraham', phone: '0521112233' }, null).body.token);
+  const second: Session = JSON.parse(
+    call(s, 'POST', '/api/client/login', { fullName: 'Noa Avraham', phone: '0521112233' }, null).body.token,
+  );
   call(s, 'POST', '/api/client/requests', { dayId, time: '10:00', service: 'fill' }, client);
   call(s, 'POST', '/api/client/requests', { dayId, time: '10:00', service: 'feet' }, second);
   const [a, b] = s.requests;
@@ -99,7 +111,9 @@ test('a client may cancel an approved appointment only until the cutoff', () => 
 
 test('a client only sees and cancels her own requests', () => {
   const { s, client, dayId } = studio();
-  const other: Session = JSON.parse(call(s, 'POST', '/api/client/login', { fullName: 'Noa Avraham', phone: '0521112233' }, null).body.token);
+  const other: Session = JSON.parse(
+    call(s, 'POST', '/api/client/login', { fullName: 'Noa Avraham', phone: '0521112233' }, null).body.token,
+  );
   call(s, 'POST', '/api/client/requests', { dayId, time: '10:00', service: 'fill' }, client);
   assert.deepEqual(call(s, 'GET', '/api/client/requests', {}, other).body, []);
   assert.equal(call(s, 'DELETE', `/api/client/requests/${s.requests[0].id}`, {}, other).status, 404);
@@ -113,7 +127,13 @@ test('a blocked client cannot send requests', () => {
 
 test('a manual booking on a closed day does not duplicate the day when Lee later opens it', () => {
   const s = emptyState();
-  call(s, 'POST', '/api/admin/bookings', { fullName: 'Maya Cohen', phone: '0503334455', date: '2026-11-05', time: '09:00', service: 'feet' });
+  call(s, 'POST', '/api/admin/bookings', {
+    fullName: 'Maya Cohen',
+    phone: '0503334455',
+    date: '2026-11-05',
+    time: '09:00',
+    service: 'feet',
+  });
   assert.equal(call(s, 'POST', '/api/admin/days', { date: '2026-11-05', slots: ['11:00'] }).status, 201);
   assert.equal(s.days.length, 1);
   assert.deepEqual(s.days[0].slots, ['09:00', '11:00']);
@@ -122,7 +142,13 @@ test('a manual booking on a closed day does not duplicate the day when Lee later
 test('monthly income counts approved appointments only', () => {
   const { s, client, dayId } = studio();
   call(s, 'POST', '/api/client/requests', { dayId, time: '10:00', service: 'anatomic', extras: { art: 2 } }, client);
-  call(s, 'POST', '/api/admin/bookings', { fullName: 'Maya Cohen', phone: '0503334455', date: '2026-11-02', time: '12:00', service: 'feet' });
+  call(s, 'POST', '/api/admin/bookings', {
+    fullName: 'Maya Cohen',
+    phone: '0503334455',
+    date: '2026-11-02',
+    time: '12:00',
+    service: 'feet',
+  });
   const month = call(s, 'GET', '/api/admin/overview').body.month;
   assert.equal(month.count, 1);
   assert.equal(month.income, 120);
@@ -131,6 +157,9 @@ test('monthly income counts approved appointments only', () => {
 test('gallery accepts only reasonably sized images', () => {
   const s = emptyState();
   assert.equal(call(s, 'POST', '/api/admin/gallery', { dataUrl: 'data:text/html;base64,PGgxPg==' }).status, 400);
-  assert.equal(call(s, 'POST', '/api/admin/gallery', { dataUrl: 'data:image/jpeg;base64,' + 'A'.repeat(3_000_000) }).status, 400);
+  assert.equal(
+    call(s, 'POST', '/api/admin/gallery', { dataUrl: 'data:image/jpeg;base64,' + 'A'.repeat(3_000_000) }).status,
+    400,
+  );
   assert.equal(call(s, 'POST', '/api/admin/gallery', { dataUrl: 'data:image/jpeg;base64,/9j/4AAQ' }).status, 201);
 });

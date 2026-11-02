@@ -1,4 +1,4 @@
-import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import type { Api, Info, ListName, Nav, Overview, ReactNode } from '../lib/types';
 import { Call, Head, MSG, WA, byDate, initials } from './shared';
 import { dayLabel } from '../lib/format';
 import { BookingRow, ReqCard } from './cards';
@@ -6,7 +6,19 @@ import { serviceName } from '../lib/catalog';
 import { IconChevron, IconTrash } from '../components/icons';
 
 /* ---------- lists behind the tiles ---------- */
-export function ListScreen({ api, list, ov, info, nav }: { api: Api; list: ListName; ov: Overview; info: Info; nav: Nav }) {
+export function ListScreen({
+  api,
+  list,
+  ov,
+  info,
+  nav,
+}: {
+  api: Api;
+  list: ListName;
+  ov: Overview;
+  info: Info;
+  nav: Nav;
+}) {
   const refresh = () => {
     nav.reload();
   };
