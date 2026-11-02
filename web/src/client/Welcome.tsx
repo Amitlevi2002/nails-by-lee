@@ -60,13 +60,13 @@ export function Welcome({ info, onDone }: { info: Info; onDone: (token: string, 
           <img src={LOGO} alt="Nails by Lee" />
           <div className="brand">Nails by Lee</div>
           <p>
-            {'\u05E7\u05D1\u05D9\u05E2\u05EA \u05EA\u05D5\u05E8 \u00B7 '}
+            {'קביעת תור \u00B7 '}
             {info.address}
           </p>
           {info.gallery.length > 0 && (
             <button type="button" className="link" onClick={() => setShowInfo(true)}>
               {
-                '\u05DB\u05DC \u05D4\u05E2\u05D1\u05D5\u05D3\u05D5\u05EA \u05D5\u05D4\u05DE\u05D7\u05D9\u05E8\u05D5\u05DF '
+                'כל העבודות והמחירון '
               }
               <IconChevron />
             </button>

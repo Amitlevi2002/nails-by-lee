@@ -92,7 +92,7 @@ export function ManualBook({ api, days, prefill = {}, nav }: { api: Api; days: A
               'קובעת...'
             ) : price && time ? (
               <>
-                {'\u05E7\u05D1\u05D9\u05E2\u05EA \u05D4\u05EA\u05D5\u05E8 '}
+                {'קביעת התור '}
                 <span className="btn-meta">{fmtPrice(price.total, price.from)}</span>
               </>
             ) : (

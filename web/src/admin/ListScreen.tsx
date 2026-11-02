@@ -59,7 +59,7 @@ export function ListScreen({ api, list, ov, info, nav }: { api: Api; list: ListN
               {dayLabel(date)}
               {' \u00B7 '}
               {rs.length}
-              {' \u05EA\u05D5\u05E8\u05D9\u05DD'}
+              {' תורים'}
             </div>
             <div className="list">
               {rs.map((r) => (
@@ -88,7 +88,7 @@ export function ListScreen({ api, list, ov, info, nav }: { api: Api; list: ListN
               <b>{r.fullName}</b>
               <span>
                 {serviceName(r.service)}
-                {' \u00B7 \u05D1\u05D9\u05E7\u05E9\u05D4 '}
+                {' \u00B7 ביקשה '}
                 {dayLabel(r.date)} <span className="ltr">{r.time}</span>
               </span>
             </div>
@@ -168,7 +168,7 @@ export function ListScreen({ api, list, ov, info, nav }: { api: Api; list: ListN
               <div className="main">
                 <b>{c.fullName}</b>
                 <span>
-                  {'\u05D1\u05D9\u05E7\u05D5\u05E8 \u05D0\u05D7\u05E8\u05D5\u05DF: '}
+                  {'ביקור אחרון: '}
                   {dayLabel(c.lastVisit)}
                 </span>
               </div>

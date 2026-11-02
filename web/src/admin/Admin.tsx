@@ -180,9 +180,9 @@ export function Admin({ api, info: initialInfo, onLogout }: { api: Api; info: In
           >
             <b>{ov ? `${ov.month.income.toLocaleString('he-IL')} ₪` : '–'}</b>
             <span>
-              {'\u05D4\u05D7\u05D5\u05D3\u05E9 \u00B7 '}
+              {'החודש \u00B7 '}
               {ov?.month.count ?? 0}
-              {' \u05EA\u05D5\u05E8\u05D9\u05DD'}
+              {' תורים'}
             </span>
           </button>
         </div>

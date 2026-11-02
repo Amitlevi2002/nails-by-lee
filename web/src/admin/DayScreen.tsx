@@ -66,7 +66,7 @@ export function DayScreen({ api, day, info, nav }: { api: Api; day: AdminDay; in
         </h1>
         <p className="subtitle">
           {approved.length}
-          {' \u05EA\u05D5\u05E8\u05D9\u05DD \u00B7 '}
+          {' תורים \u00B7 '}
           {income}
           {' \u20AA'}
           {!day.isOpen ? ' · סגור לבקשות' : ''}

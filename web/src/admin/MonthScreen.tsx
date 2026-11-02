@@ -24,7 +24,7 @@ export function MonthScreen({ ov, nav }: { ov: Overview; nav: Nav }) {
           </b>
           <span>
             {m.count}
-            {' \u05EA\u05D5\u05E8\u05D9\u05DD'}
+            {' תורים'}
           </span>
         </div>
         {m.byService.length > 0 && (

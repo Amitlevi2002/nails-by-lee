@@ -7,6 +7,7 @@ import type { Transport } from './api';
 
 const KEY = 'lee_demo_v2';
 const PHOTOS = Array.from({ length: 9 }, (_, i) => `/gallery/${i + 1}.jpg`);
+// Public details only (both are on her Instagram); no phone number in the demo.
 const STUDIO = { address: 'ראש העין', instagram: 'lee_nailartist' };
 
 let state: State | null = null;

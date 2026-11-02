@@ -67,7 +67,7 @@ export function Clients({ api, nav }: { api: Api; nav: Nav }) {
                 </div>
                 <span className="hint">
                   {c.approved}
-                  {' \u05EA\u05D5\u05E8\u05D9\u05DD'}
+                  {' תורים'}
                 </span>
                 <IconChevron />
               </button>

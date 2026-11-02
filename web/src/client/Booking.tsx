@@ -130,7 +130,7 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
             }
           />
           <h1 className="title">
-            {'\u05D4\u05D9\u05D9 '}
+            {'היי '}
             {first}, מתי נוח לך?
           </h1>
           <p className="subtitle">בחרי יום מהימים הפתוחים</p>
@@ -252,7 +252,7 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
             <button className="btn" disabled={!service} onClick={() => go('confirm')}>
               {price ? (
                 <>
-                  {'\u05D4\u05DE\u05E9\u05DA '}
+                  {'המשך '}
                   <span className="btn-meta">{fmtPrice(price.total, price.from)}</span>
                 </>
               ) : (
@@ -272,9 +272,9 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
           <Head onBack={() => go('service')} title="4 מתוך 4" />
           <h1 className="title">הכל נכון?</h1>
           <p className="subtitle">
-            {'\u05D0\u05E4\u05E9\u05E8 \u05DC\u05D1\u05D8\u05DC \u05E2\u05D3 '}
+            {'אפשר לבטל עד '}
             {info.cancelHours}
-            {' \u05E9\u05E2\u05D5\u05EA \u05DC\u05E4\u05E0\u05D9 \u05D4\u05EA\u05D5\u05E8'}
+            {' שעות לפני התור'}
           </p>
           {err && (
             <div className="error" role="alert">
@@ -433,9 +433,9 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
         <Head onBack={() => go('days')} />
         <h1 className="title">התורים שלי</h1>
         <p className="subtitle">
-          {'\u05D1\u05D9\u05D8\u05D5\u05DC \u05D0\u05E4\u05E9\u05E8\u05D9 \u05E2\u05D3 '}
+          {'ביטול אפשרי עד '}
           {info.cancelHours}
-          {' \u05E9\u05E2\u05D5\u05EA \u05DC\u05E4\u05E0\u05D9 \u05D4\u05EA\u05D5\u05E8'}
+          {' שעות לפני התור'}
         </p>
         {err && (
           <div className="error" role="alert">

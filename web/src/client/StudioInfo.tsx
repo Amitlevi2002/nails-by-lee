@@ -62,9 +62,9 @@ export function StudioInfo({ info }: { info: Info }) {
         <div>
           <span>ביטול תור</span>
           <b>
-            {'\u05E2\u05D3 '}
+            {'עד '}
             {info.cancelHours}
-            {' \u05E9\u05E2\u05D5\u05EA \u05DC\u05E4\u05E0\u05D9'}
+            {' שעות לפני'}
           </b>
         </div>
       </div>

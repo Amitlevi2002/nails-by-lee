@@ -93,9 +93,9 @@ export function Reschedule({ api, req, days, nav }: { api: Api; req: RequestView
         <h1 className="title">מועד אחר ל{firstName(req.fullName)}</h1>
         <p className="subtitle">
           {serviceName(req.service)}
-          {' \u00B7 \u05D1\u05D9\u05E7\u05E9\u05D4 '}
+          {' \u00B7 ביקשה '}
           {dayLabel(req.date)}
-          {' \u05D1-'}
+          {' ב-'}
           <span className="ltr">{req.time}</span>
         </p>
         {err && (
