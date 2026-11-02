@@ -1,0 +1,27 @@
+import type { AdminDay, Api, ClientDay, CustomerProfile, CustomerRow, Extras, Info, ListName, Nav, Overview, Photo, ReactNode, RequestView, Screen, Settings } from '../lib/types';
+import { useState, useMemo } from 'react';
+import { store } from '../lib/storage';
+import { TOKEN } from './shared';
+import { makeApi } from '../lib/api';
+import { Login } from './Login';
+import { Admin } from './Admin';
+
+/* ================================================================ */
+export function AdminApp({ info }: { info: Info }) {
+  const [token, setToken] = useState(store.get(TOKEN));
+  const logout = () => {
+    store.del(TOKEN);
+    setToken(null);
+  };
+  const api = useMemo(() => makeApi(TOKEN, logout), []);
+  if (!token)
+    return (
+      <Login
+        onDone={(t) => {
+          store.set(TOKEN, t);
+          setToken(t);
+        }}
+      />
+    );
+  return <Admin api={api} info={info} onLogout={logout} />;
+}
