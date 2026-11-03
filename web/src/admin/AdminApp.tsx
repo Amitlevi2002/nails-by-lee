@@ -5,6 +5,7 @@ import { TOKEN } from './shared';
 import { makeApi } from '../lib/api';
 import { Login } from './Login';
 import { Admin } from './Admin';
+import { BrandBar } from '../client/Brand';
 
 /* ================================================================ */
 export function AdminApp({ info }: { info: Info }) {
@@ -23,5 +24,10 @@ export function AdminApp({ info }: { info: Info }) {
         }}
       />
     );
-  return <Admin api={api} info={info} onLogout={logout} />;
+  return (
+    <>
+      <BrandBar end={<span className="brand-role">ניהול</span>} />
+      <Admin api={api} info={info} onLogout={logout} />
+    </>
+  );
 }

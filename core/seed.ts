@@ -96,11 +96,11 @@ export function demoState(now: Date, photos: string[], studio: Partial<Settings>
       attended,
     });
   book(20, 10, 6, '11:00', 'fill', {}, 'approved', '', 1);
-  book(21, 11, 2, '10:00', 'anatomic', { art: 2 }, 'approved');
+  book(21, 11, 2, '10:00', 'anatomic', { art: 2 }, 'approved', 'גוון: לילך');
   book(22, 11, 3, '13:00', 'build', {}, 'approved');
-  book(23, 12, 1, '10:00', 'fill', { french: 1 }, 'pending', 'צבע ורוד בהיר');
-  book(24, 12, 2, '15:00', 'anatomic', {}, 'approved');
-  book(25, 12, 4, '10:00', 'build', { art: 4 }, 'pending', 'פעם ראשונה');
+  book(23, 12, 1, '10:00', 'fill', { french: 1 }, 'pending', 'גוון: ורוד עדין');
+  book(24, 12, 2, '15:00', 'anatomic', {}, 'approved', 'גוון: ניוד');
+  book(25, 12, 4, '10:00', 'build', { art: 4 }, 'pending', 'גוון: אדום קלאסי · פעם ראשונה');
   book(26, 13, 3, '13:00', 'anatomic', { '3d': 2 }, 'approved');
   book(27, 12, 5, '17:30', 'feet', {}, 'rejected');
   return state;

@@ -5,7 +5,7 @@ import { demoState } from '../../../core/seed';
 import type { Session, State } from '../../../core/types';
 import type { Transport } from './api';
 
-const KEY = 'lee_demo_v2';
+const KEY = 'lee_demo_v3';
 const PHOTOS = Array.from({ length: 9 }, (_, i) => `/gallery/${i + 1}.jpg`);
 // Public details only (both are on her Instagram); no phone number in the demo.
 const STUDIO = { address: 'ראש העין', instagram: 'lee_nailartist' };
@@ -53,7 +53,7 @@ export const demoTransport: Transport = async (path, { method, body, token }) =>
 
 export function resetDemo() {
   try {
-    for (const k of [KEY, 'lee_client_token', 'lee_client_name', 'lee_admin_token']) localStorage.removeItem(k);
+    for (const k of [KEY, 'lee_client_token', 'lee_client_name', 'lee_client_shade', 'lee_admin_token']) localStorage.removeItem(k);
   } catch {
     /* nothing stored */
   }

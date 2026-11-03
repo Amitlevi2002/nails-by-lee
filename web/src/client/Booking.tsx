@@ -5,11 +5,26 @@ import { STATUS_LABEL, dateParts, dayLabel, icsFor, minutesUntil, waLink } from 
 import { Head } from './Head';
 import { IconCheck, IconChevron, IconLogout } from '../components/icons';
 import { ServicePicker } from '../components/ServicePicker';
-import { NailPreview, SHADES, ShadePicker, type ShadeId } from '../components/NailPreview';
+import { SHADES, shadeById, shadeNote, type ShadeId } from '../lib/shades';
+import { Steps } from './Steps';
 import { StudioInfo } from './StudioInfo';
 
 /* ---------- booking flow ---------- */
-export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; name: string; onLogout: () => void }) {
+export function Booking({
+  api,
+  info,
+  name,
+  shade,
+  onShade,
+  onLogout,
+}: {
+  api: Api;
+  info: Info;
+  name: string;
+  shade: ShadeId;
+  onShade: (s: ShadeId) => void;
+  onLogout: () => void;
+}) {
   const [screen, setScreen] = useState('days');
   const [days, setDays] = useState<ClientDay[] | null>(null);
   const [mine, setMine] = useState<RequestView[]>([]);
@@ -18,7 +33,6 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
   const [service, setService] = useState('');
   const [extras, setExtras] = useState<Extras>({});
   const [note, setNote] = useState('');
-  const [shade, setShade] = useState<ShadeId>('nude');
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   const [booked, setBooked] = useState(false); // auto-approved
@@ -35,6 +49,7 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
     }
   }
   useEffect(() => {
+    window.scrollTo(0, 0); // she arrives from the bottom of the front page
     load();
   }, []);
   const go = (s) => {
@@ -63,8 +78,8 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
           time,
           service,
           extras,
-          // the shade she pointed at reaches Lee with the request
-          note: [`גוון: ${SHADES.find((s) => s.id === shade)!.name}`, note.trim()].filter(Boolean).join(' · '),
+          // the shade she tried on reaches Lee with the request
+          note: shadeNote(shadeById(shade), note),
         },
       });
       setBooked(r.status === 'approved');
@@ -132,6 +147,7 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
               </button>
             }
           />
+          <Steps at={1} />
           <h1 className="title">
             {'היי '}
             {first}, מתי נוח לך?
@@ -216,7 +232,8 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
     return (
       <div className="app">
         <div className="screen" key="times">
-          <Head onBack={() => go('days')} title="2 מתוך 4" />
+          <Head onBack={() => go('days')} />
+          <Steps at={2} />
           <h1 className="title">באיזו שעה?</h1>
           <p className="subtitle">
             {p.dow} {p.num} {p.mon}
@@ -247,15 +264,27 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
     return (
       <div className="app">
         <div className="screen" key="service">
-          <Head onBack={() => go('times')} title="3 מתוך 4" />
+          <Head onBack={() => go('times')} />
+          <Steps at={3} />
           <h1 className="title">מה עושות?</h1>
           <p className="subtitle">בחרי טיפול ותוספות</p>
-          {service && (
-            <>
-              <NailPreview service={service} extras={extras} shade={shade} />
-              <ShadePicker value={shade} onChange={setShade} />
-            </>
-          )}
+          <div className="shade-line" role="radiogroup" aria-label="גוון">
+            {SHADES.map((s) => (
+              <button
+                key={s.id}
+                role="radio"
+                aria-checked={shade === s.id}
+                aria-label={s.name}
+                className={`mini-tip ${shade === s.id ? 'on' : ''}`}
+                style={{ '--c': s.hex } as React.CSSProperties}
+                onClick={() => onShade(s.id)}
+              />
+            ))}
+          </div>
+          <p className="hint shade-hint">
+            {'בגוון '}
+            {shadeById(shade).name}
+          </p>
           <ServicePicker service={service} setService={setService} extras={extras} setExtras={setExtras} />
           <div className="bottom">
             <button className="btn" disabled={!service} onClick={() => go('confirm')}>
@@ -278,7 +307,8 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
     return (
       <div className="app">
         <div className="screen" key="confirm">
-          <Head onBack={() => go('service')} title="4 מתוך 4" />
+          <Head onBack={() => go('service')} />
+          <Steps at={4} />
           <h1 className="title">הכל נכון?</h1>
           <p className="subtitle">
             {'אפשר לבטל עד '}
@@ -303,6 +333,13 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
               <span>טיפול</span>
               <b>{serviceName(service)}</b>
             </div>
+            <div>
+              <span>גוון</span>
+              <b>
+                {shadeById(shade).name}
+                <i className="swatch" style={{ '--c': shadeById(shade).hex } as React.CSSProperties} />
+              </b>
+            </div>
             {ex && (
               <div>
                 <span>תוספות</span>
@@ -322,7 +359,7 @@ export function Booking({ api, info, name, onLogout }: { api: Api; info: Info; n
               maxLength={200}
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="לדוגמה: צבע ורוד בהיר"
+              placeholder="לדוגמה: צורת שקד, קצת יותר קצר"
             />
           </div>
           <div className="bottom">

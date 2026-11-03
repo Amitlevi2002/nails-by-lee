@@ -6,15 +6,16 @@ Before this, everything happened in WhatsApp threads: "do you have something Tue
 
 The interface is in Hebrew (right-to-left) and built for phones first.
 
-| Client: welcome | Client: booking | Lee: home |
+| Client: try a shade on | Client: booking | Lee: home |
 | --- | --- | --- |
-| ![Welcome screen with gallery](docs/client-welcome.png) | ![Booking flow](docs/client-booking.png) | ![Admin home](docs/admin.png) |
+| ![Front page: a hand with the nails painted in the chosen shade](docs/client-welcome.png) | ![Booking flow](docs/client-booking.png) | ![Admin home](docs/admin.png) |
 
 **Demo:** the web app runs on its own, with sample data, when it's built without an API address. A switch at the top moves between Lee's side and the client side, so you can book as a client and then approve it as Lee.
 
 ## What it does
 
 **For clients**
+- Try a shade on before booking: tap through 14 polish colours and the nails on the hand photo get painted in it. The shade she picks goes to Lee with the request, and Lee sees it on the request as a small painted nail
 - Sign in with name and phone number (no passwords to forget)
 - Pick a day and time from what Lee opened, then the treatment and extras, with the price as they go
 - See their upcoming appointments, cancel up to N hours before (Lee sets N)
@@ -42,6 +43,8 @@ server/   Express + SQLite (node:sqlite). Runs the same core/ behind real auth.
 
 The interesting decision is **`core/handler.ts`**. All of the rules (which slots are free, who can cancel when, what counts toward this month's income, who is due for a visit) live in one pure function with no database or HTTP in it. The server wraps it with authentication and persistence. The demo wraps it with localStorage. Both run exactly the same rules, and the tests exercise them directly without starting anything.
 
+**The try-on** (`web/src/lib/tryon.ts`) works on one studio photo of a hand with white gel nails on a pink set. It finds the nails by colour, then measures each one (principal axis, length, width) and lays an exact almond over it, so the paint always reaches the edge of the nail and never spills onto skin. The photo's own light and shadow stay on the nail, with a gel shine where the original was brightest.
+
 **Server details**
 - **Logins are signed tokens** (HMAC-SHA256 with an expiry), so a client can't change her id or make herself an admin. The admin password comes from an environment variable and is compared in constant time. Admin login is limited to 5 attempts per 15 minutes per IP.
 - **Writes are all-or-nothing.** The handler runs on a copy of the state, and the copy replaces the live state only after SQLite has saved it.
@@ -63,7 +66,7 @@ cd ../web && npm install && npm run build:server
 cd ../server && npm start       # clients at /, Lee at /admin
 ```
 
-Tests (booking rules, tokens, storage): `cd server && npm test`
+Tests (booking rules, tokens, storage): `cd server && npm test`. Shade notes: `cd web && npm test`
 
 ## Bugs found while porting it
 

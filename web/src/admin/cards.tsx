@@ -3,6 +3,23 @@ import { useState } from 'react';
 import { extrasLabel, fmtPrice, isFromPrice, serviceName } from '../lib/catalog';
 import { Call, MSG, WA } from './shared';
 import { dayLabel } from '../lib/format';
+import { readShadeNote } from '../lib/shades';
+
+/** The shade the client tried on, as a little painted nail, then whatever she wrote. */
+function NoteLine({ note, className }: { note: string; className: string }) {
+  const { shade, rest } = readShadeNote(note);
+  return (
+    <div className={className}>
+      {shade && (
+        <span className="shade-tag">
+          <i style={{ '--c': shade.hex } as React.CSSProperties} />
+          {shade.name}
+        </span>
+      )}
+      {rest && <span>{rest}</span>}
+    </div>
+  );
+}
 
 /* ---------- request + booking cards ---------- */
 export function ReqCard({
@@ -62,7 +79,7 @@ export function ReqCard({
         </div>
         <b>{fmtPrice(r.price, isFromPrice(r.service))}</b>
       </div>
-      {r.note && <div className="note">{r.note}</div>}
+      {r.note && <NoteLine note={r.note} className="note" />}
       {clash && <div className="warn">כבר אישרת לקוחה אחרת בשעה הזו</div>}
       {err && <div className="error">{err}</div>}
       <div className="actions">
@@ -113,7 +130,7 @@ export function BookingRow({
             {r.price}
             {' \u20AA'}
           </span>
-          {r.note && <span className="note-s">{r.note}</span>}
+          {r.note && <NoteLine note={r.note} className="note-s" />}
         </div>
       </div>
       <div className="mini-row">
