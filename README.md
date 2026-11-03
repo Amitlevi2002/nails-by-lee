@@ -4,11 +4,13 @@ A booking system I built for Lee, a nail technician working from home. Clients a
 
 Before this, everything happened in WhatsApp threads: "do you have something Tuesday?", back and forth, and a paper notebook to remember who's coming when.
 
-The interface is in Hebrew (right-to-left) and built for phones first.
+The interface is in Hebrew (right-to-left), built for phones first; on a wide screen the front page opens up into two columns.
 
 | Client: try a shade on | Client: booking | Lee: home |
 | --- | --- | --- |
 | ![Front page: a hand with the nails painted in the chosen shade](docs/client-welcome.png) | ![Booking flow](docs/client-booking.png) | ![Admin home](docs/admin.png) |
+
+**Live demo:** https://nails-by-lee.vercel.app
 
 **Demo:** the web app runs on its own, with sample data, when it's built without an API address. A switch at the top moves between Lee's side and the client side, so you can book as a client and then approve it as Lee.
 

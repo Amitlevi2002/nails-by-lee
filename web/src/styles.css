@@ -499,3 +499,20 @@ body::before { background: #fff; }
 /* in the demo the switch bar sits on top, so the brand strip sticks just under it */
 .demo-bar ~ .brand-bar, .demo-bar ~ .front .brand-bar { top: calc(env(safe-area-inset-top, 0px) + var(--demo-h, 52px)); }
 .brand-role { font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 3px 10px; }
+
+/* wide screens: the front page becomes a spread, the hand large on one side, the words and the booking card on the other */
+@media (min-width: 960px) {
+  .front { max-width: 1180px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-template-areas: "bar bar" "intro hero" "book hero" "work work"; column-gap: 56px; align-content: start; padding: 0 40px 80px; background: var(--bg); }
+  .front .brand-bar { grid-area: bar; max-width: none; margin: 0 -40px; padding: 0 40px; }
+  .front .tryon { grid-area: hero; height: 680px; margin-top: 32px; }
+  .front .tryon canvas { width: 640px; right: -90px; top: -90px; }
+  .front .pick { top: 150px; left: 28px; }
+  .front .intro { grid-area: intro; padding: 72px 0 0; }
+  .front .intro h1 { font-size: 76px; }
+  .front .card.book { grid-area: book; margin: 32px 0 0; align-self: start; }
+  .front .work { grid-area: work; padding-top: 48px; }
+  .front .work small { padding: 0 0 12px; font-size: 14px; }
+  .front .strip { padding: 0 0 6px; gap: 14px; }
+  .front .strip button { width: 150px; height: 200px; }
+  .ig-chip { left: 24px; }
+}
