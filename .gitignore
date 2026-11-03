@@ -5,3 +5,6 @@ dist/
 .env
 !.env.example
 !web/.env.server
+
+.vercel
+.env*
