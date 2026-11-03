@@ -9,7 +9,7 @@ type View = 'admin' | 'client';
 
 /** The demo shows both sides of the system with a switch on top. */
 function Demo({ initial }: { initial: any }) {
-  const [view, setView] = useState<View>(() => (store.get('lee_demo_view') as View) || 'admin');
+  const [view, setView] = useState<View>(() => (store.get('lee_demo_view') as View) || 'client');
   const [info, setInfo] = useState(initial);
   const [n, setN] = useState(0);
   const [intro, setIntro] = useState(() => !store.get('lee_demo_seen'));
@@ -81,7 +81,7 @@ function Demo({ initial }: { initial: any }) {
 
 export function App({ info }: { info: any }) {
   if (isDemo) {
-    // the demo opens straight into the admin side, already signed in
+    // the demo opens on the client side (the try-on); Lee's side is already signed in for the switch
     if (!store.get('lee_admin_token')) store.set('lee_admin_token', 'admin');
     return <Demo initial={info} />;
   }
