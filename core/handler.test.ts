@@ -61,7 +61,7 @@ test('a client books a free slot; the request waits for Lee', () => {
   const r = call(s, 'POST', '/api/client/requests', { dayId, time: '10:00', service: 'fill' }, client);
   assert.equal(r.status, 201);
   assert.equal(r.body.status, 'pending');
-  assert.equal(s.requests[0].price, 150);
+  assert.equal(s.requests[0].price, 140);
 });
 
 test('a client cannot book a time that is not offered, has passed, or twice on the same day', () => {

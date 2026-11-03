@@ -6,15 +6,15 @@ import { priceOf } from './handler';
 export const DEFAULT_CATALOG: Catalog = {
   services: [
     { id: 'anatomic', name: 'לק ג׳ל מבנה אנטומי', price: 130 },
-    { id: 'build', name: 'בנייה בג׳ל', price: 200, from: true, hint: 'המחיר משתנה לפי אורך' },
-    { id: 'fill', name: 'מילוי בג׳ל', price: 150 },
+    { id: 'build', name: 'בנייה בג׳ל', price: 180, from: true, hint: 'המחיר משתנה לפי אורך' },
+    { id: 'fill', name: 'מילוי בג׳ל', price: 140, from: true },
     { id: 'feet', name: 'ג׳ל רגליים', price: 120 },
   ],
   extras: [
-    { id: 'complete', name: 'השלמת ציפורן', price: 10, perNail: true },
+    { id: 'complete', name: 'השלמה', price: 10, perNail: true },
     { id: 'french', name: 'פרנץ׳', price: 10, perNail: false },
-    { id: 'art', name: 'ציורים', price: 5, perNail: true },
-    { id: '3d', name: 'תלת מימד', price: 10, perNail: true },
+    { id: 'art', name: 'תוספת ציורים', price: 5, perNail: true },
+    { id: '3d', name: 'תוספת תלת מימד', price: 10, perNail: true },
   ],
 };
 

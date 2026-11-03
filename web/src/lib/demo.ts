@@ -5,7 +5,7 @@ import { demoState } from '../../../core/seed';
 import type { Session, State } from '../../../core/types';
 import type { Transport } from './api';
 
-const KEY = 'lee_demo_v3';
+const KEY = 'lee_demo_v4';
 const PHOTOS = Array.from({ length: 9 }, (_, i) => `/gallery/${i + 1}.jpg`);
 // Public details only (both are on her Instagram); no phone number in the demo.
 const STUDIO = { address: 'ראש העין', instagram: 'lee_nailartist' };

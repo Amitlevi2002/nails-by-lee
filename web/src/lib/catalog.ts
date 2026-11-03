@@ -8,14 +8,15 @@ export const DEFAULT_CATALOG = {
     {
       id: 'build',
       name: 'בנייה בג׳ל',
-      price: 200,
+      price: 180,
       from: true,
       hint: 'המחיר משתנה לפי אורך',
     },
     {
       id: 'fill',
       name: 'מילוי בג׳ל',
-      price: 150,
+      price: 140,
+      from: true,
     },
     {
       id: 'feet',
@@ -26,7 +27,7 @@ export const DEFAULT_CATALOG = {
   extras: [
     {
       id: 'complete',
-      name: 'השלמת ציפורן',
+      name: 'השלמה',
       price: 10,
       perNail: true,
     },
@@ -38,13 +39,13 @@ export const DEFAULT_CATALOG = {
     },
     {
       id: 'art',
-      name: 'ציורים',
+      name: 'תוספת ציורים',
       price: 5,
       perNail: true,
     },
     {
       id: '3d',
-      name: 'תלת מימד',
+      name: 'תוספת תלת מימד',
       price: 10,
       perNail: true,
     },
