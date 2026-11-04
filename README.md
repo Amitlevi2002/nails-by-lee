@@ -35,6 +35,10 @@ The interface is in Hebrew (right-to-left), built for phones first; on a wide sc
 - This month's income by treatment
 - Edit prices and extras, upload photos, choose whether requests need approval
 
+## Accessibility, languages and legal pages
+
+Every page has an accessibility menu (text size, high contrast, highlighted links, readable font, stopped animations, grayscale), a skip link and full keyboard use, built toward Israeli Standard 5568 (WCAG 2.0 AA). The screens were checked with axe. A button switches between Hebrew and English, including the page direction, and there are privacy, terms and accessibility statement pages (`public/site-kit.js`, `public/site-i18n.js`).
+
 ## How it's built
 
 ```

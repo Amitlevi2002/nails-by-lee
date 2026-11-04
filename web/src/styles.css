@@ -354,9 +354,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   --blush: #f7dadf;
   --card: #ffffff;
   --sand: #f3a6c1;
-  --sand-deep: #e57aa1;
+  --sand-deep: #ad2f61;
   --ink: #1d1418;
-  --muted: #7a6870;
+  --muted: #5f4f57;
   --line: #f3d5e0;
   --ok: #4f8a64;   --ok-bg: #e5f2ea;
   --no: #c2435d;   --no-bg: #fbe3e8;
@@ -383,8 +383,8 @@ body { background: var(--bg); font-size: 15px; }
 .row .cal { background: var(--bg); border-radius: 0; }
 .row .cal b { font-size: 32px; }
 .row .chev, .welcome .link .chev { color: var(--sand-deep); }
-.btn { background: var(--sand); color: #fff; font-weight: 500; letter-spacing: .04em; font-size: 15px; padding: 16px; transition: background .6s, color .6s, transform .08s; }
-.btn:disabled { background: #efc9d6; color: #fff; }
+.btn { background: var(--sand); color: var(--ink); font-weight: 500; letter-spacing: .04em; font-size: 15px; padding: 16px; transition: background .6s, color .6s, transform .08s; }
+.btn:disabled { background: #f6dbe5; color: #5f4f57; }
 .btn.light { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
 .link { color: var(--muted); }
 .icon:active { background: var(--line); }
@@ -409,7 +409,7 @@ textarea.input { border: 1px solid var(--line); background: var(--card); padding
 body::before { background: #fff; }
 .demo-seg { background: var(--bg); border-radius: 0; }
 .demo-seg button { color: var(--muted); border-radius: 0; font-size: 13px; }
-.demo-seg button.on { background: var(--sand); color: #fff; }
+.demo-seg button.on { background: var(--sand); color: var(--ink); }
 .demo-reset { color: var(--sand-deep); }
 .demo-intro { background: #1d141855; }
 .demo-intro .sheet { background: var(--bg); }
@@ -483,7 +483,7 @@ body::before { background: #fff; }
 .req .note, .note-s { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; background: var(--bg); }
 .today { background: var(--ink); }
 .today-hours small, .tile.ink span, .big-number span { color: var(--sand); }
-.today .btn { background: var(--sand); color: #fff; }
+.today .btn { background: var(--sand); color: var(--ink); }
 .tile.ink { background: var(--ink); }
 .cell.open { background: #fbdbe6; }
 .legend i.open { background: #fbdbe6; }
@@ -512,3 +512,21 @@ body::before { background: #fff; }
   .front .strip button { width: 150px; height: 200px; }
   .ig-chip { left: 24px; }
 }
+
+/* readable on every surface: colour alone never carries a state, and small text stays above 4.5:1 */
+.pill.pending { color: #7a4d14; }
+.pill.approved { color: #2f6a45; }
+.pill.rejected, .pill.cancelled { color: #a22a44; }
+.tile.wait b { color: #8a5a1c; }
+.tile.ok b { color: #2f6a45; }
+.tile.no b { color: #a22a44; }
+.link.danger, .mini.danger, .small-actions .danger { color: #a22a44; }
+.tile.ink span, .big-number span, .today-hours small { color: var(--sand); }
+.cell.past { opacity: 1; color: #6d5c64; }
+.cell .s { color: #8f2a55; }
+.legend { color: var(--muted); }
+.demo-reset { color: #ad2f61; }
+input::placeholder, textarea::placeholder { color: #6d5c64; opacity: 1; }
+.yes { color: #fff; }
+.btn.wa-btn { color: #fff; }
+.mini.wa { color: #17603a; }
