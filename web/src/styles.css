@@ -424,14 +424,11 @@ body::before { background: #fff; }
 .brand b { font: 400 26px/1 var(--logo); }
 
 /* ---------- front page ---------- */
-.front { max-width: 520px; margin: 0 auto; padding-bottom: 80px; background: linear-gradient(var(--blush) 0, var(--blush) 540px, var(--bg) 900px); min-height: 100dvh; }
-.tryon { position: relative; height: 470px; overflow: hidden; background: var(--blush); }
-.tryon canvas { position: absolute; right: -78px; top: -60px; width: 452px; height: auto;
-  -webkit-mask: linear-gradient(to right, transparent, #000 22%), linear-gradient(#000 88%, transparent); -webkit-mask-composite: source-in;
-  mask: linear-gradient(to right, transparent, #000 22%), linear-gradient(#000 88%, transparent); mask-composite: intersect;
-  animation: hand-in 1.4s cubic-bezier(.2,.7,.1,1) both; }
-@keyframes hand-in { from { opacity: 0; transform: translate(30px, -20px); } }
-.pick { position: absolute; z-index: 2; left: 16px; top: 96px; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 8px; touch-action: none; }
+.front { max-width: 520px; margin: 0 auto; padding-bottom: 80px; background: var(--bg); min-height: 100dvh; }
+.tryon { position: relative; overflow: hidden; background: #fbc0d4; }
+.tryon canvas { display: block; width: 100%; height: auto; animation: hand-in 1.2s ease both; }
+@keyframes hand-in { from { opacity: 0; } }
+.pick { position: absolute; z-index: 2; left: 10px; top: 48px; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 8px; touch-action: none; }
 .pick .arrow { width: 40px; height: 30px; border: 0; background: none; display: grid; place-items: center; color: var(--ink); opacity: .7; padding: 0; }
 .pick .arrow svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .pick .well { position: relative; width: 52px; height: 76px; overflow: hidden; border: 0; padding: 0; background: none; }
@@ -504,9 +501,8 @@ body::before { background: #fff; }
 @media (min-width: 960px) {
   .front { max-width: 1180px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-template-areas: "bar bar" "intro hero" "book hero" "work work"; column-gap: 56px; align-content: start; padding: 0 40px 80px; background: var(--bg); }
   .front .brand-bar { grid-area: bar; max-width: none; margin: 0 -40px; padding: 0 40px; }
-  .front .tryon { grid-area: hero; height: 680px; margin-top: 32px; }
-  .front .tryon canvas { width: 640px; right: -90px; top: -90px; }
-  .front .pick { top: 150px; left: 28px; }
+  .front .tryon { grid-area: hero; margin-top: 32px; align-self: start; }
+  .front .pick { top: 90px; left: 18px; }
   .front .intro { grid-area: intro; padding: 72px 0 0; }
   .front .intro h1 { font-size: 76px; }
   .front .card.book { grid-area: book; margin: 32px 0 0; align-self: start; }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { SHADES, shadeById, type ShadeId } from '../lib/shades';
 import { TryOn } from '../lib/tryon';
 
-const HAND = '/hand.png';
+const HAND = '/hand.jpg';
 const calm = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**

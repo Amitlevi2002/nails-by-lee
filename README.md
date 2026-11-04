@@ -17,7 +17,7 @@ The interface is in Hebrew (right-to-left), built for phones first; on a wide sc
 ## What it does
 
 **For clients**
-- Try a shade on before booking: tap through 14 polish colours and the nails on the hand photo get painted in it. The shade she picks goes to Lee with the request, and Lee sees it on the request as a small painted nail
+- Try a shade on before booking: tap through 14 polish colours and the nails in the photo get painted in it. The shade she picks goes to Lee with the request, and Lee sees it on the request as a small painted nail
 - Sign in with name and phone number (no passwords to forget)
 - Pick a day and time from what Lee opened, then the treatment and extras, with the price as they go
 - See their upcoming appointments, cancel up to N hours before (Lee sets N)
@@ -45,7 +45,7 @@ server/   Express + SQLite (node:sqlite). Runs the same core/ behind real auth.
 
 The interesting decision is **`core/handler.ts`**. All of the rules (which slots are free, who can cancel when, what counts toward this month's income, who is due for a visit) live in one pure function with no database or HTTP in it. The server wraps it with authentication and persistence. The demo wraps it with localStorage. Both run exactly the same rules, and the tests exercise them directly without starting anything.
 
-**The try-on** (`web/src/lib/tryon.ts`) works on one studio photo of a hand with white gel nails on a pink set. It finds the nails by colour, then measures each one (principal axis, length, width) and lays an exact almond over it, so the paint always reaches the edge of the nail and never spills onto skin. The photo's own light and shadow stay on the nail, with a gel shine where the original was brightest.
+**The try-on** (`web/src/lib/tryon.ts`) works on one studio photo of hands with milky gel nails on a pink set. It finds the nails by colour (the gel keeps its blue close to its green, while the background runs bluer and skin less blue), smooths each one and fills it by its convex outline, so the paint reaches the edge of the nail and never spills. The photo's own light and shadow stay on the nail, with a gel shine where the original reflected the light.
 
 **Server details**
 - **Logins are signed tokens** (HMAC-SHA256 with an expiry), so a client can't change her id or make herself an admin. The admin password comes from an environment variable and is compared in constant time. Admin login is limited to 5 attempts per 15 minutes per IP.
